@@ -12,9 +12,9 @@ provider "azurerm" {
 
 terraform {
   required_providers {
-    random = {
-        version = ">= 2.3"
-    }
+    # random = {
+    #     version = ">= 2.3"
+    # }
     azurerm = {
         version = ">=2.7"
     }

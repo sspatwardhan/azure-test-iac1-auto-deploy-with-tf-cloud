@@ -149,12 +149,14 @@ resource "azurerm_storage_account" "acqa-test-storageaccount1" {
 }
 
 # Create virtual machine
-resource "azurerm_linux_virtual_machine" "acqa-test-vm1" {
-    name                  = "acqa-test-vm1"
+resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
+    name                  = "acqa-lvm1"
     location              = "eastus"
     resource_group_name   = azurerm_resource_group.acqa-test-rg1.name
     network_interface_ids = [azurerm_network_interface.acqa-test-nic1.id]
     size                  = "Standard_DS1_v2"
+    admin_username      = "adminuser"
+    admin_password      = "P@$$w0rd1234!"
 
     os_disk {
         name              = "acqa-test-osdisk1"
@@ -169,8 +171,7 @@ resource "azurerm_linux_virtual_machine" "acqa-test-vm1" {
         version   = "latest"
     }
 
-    computer_name  = "acqa-test-vm1"
-    admin_username = "acqa-test-user1"
+    computer_name  = "acqa-lvm1"
     disable_password_authentication = false
 
     boot_diagnostics {
@@ -178,87 +179,8 @@ resource "azurerm_linux_virtual_machine" "acqa-test-vm1" {
     }
 
     tags = {
-        Name = "acqa-test-vm1"
+        Name = "acqa-lvm1"
         ACQAResource = "true"
         Owner = "ACQA"
      }
-    #admin_ssh_key {
-    #username   = "acqa-test-user1"
-    #public_key = file("~/.ssh/id_rsa.pub")
-}
-
-# Create SQL Server
-resource "azurerm_sql_server" "acqa-test-sqlserver1" {
-  name                         = "acqa-test-sqlserver1"
-  resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
-  location                     = azurerm_resource_group.acqa-test-rg1.location
-  version                      = "12.0"
-  administrator_login          = "4dm1n157r470r"
-  administrator_login_password = "4-v3ry-53cr37-p455w0rd"
-
-  tags = {
-        Name = "acqa-test-sqlserver1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
-
-#Create SQL DB
-resource "azurerm_sql_database" "acqa-test-sqldb1" {
-  name                = "acqa-test-sqldb1"
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-  location            = azurerm_resource_group.acqa-test-rg1.location
-  server_name         = azurerm_sql_server.acqa-test-sqlserver1.name
-
-  tags = {
-        Name = "acqa-test-sqldb1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-
-  threat_detection_policy {
-    state = "Disabled"
-  }
-}
-
-resource "azurerm_sql_firewall_rule" "acqa-test-firewallrule1" {
-  name                = "acqa-test-firewallrule1"
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-  server_name         = azurerm_sql_server.acqa-test-sqlserver1.name
-  start_ip_address    = "0.0.0.0"
-  end_ip_address      = "0.0.0.0"
-}
-
-
-# Create pgsql server and db
-resource "azurerm_postgresql_server" "acqa-test-pgsqlserver1" {
-  name                = "acqa-test-pgsqlserver1"
-  location            = azurerm_resource_group.acqa-test-rg1.location
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-
-  sku_name = "B_Gen5_2"
-
-  storage_mb                   = 5120
-  backup_retention_days        = 7
-  geo_redundant_backup_enabled = false
-  auto_grow_enabled            = true
-
-  administrator_login          = "psqladminun"
-  administrator_login_password = "H@Sh1CoR3!"
-  version                      = "9.5"
-  ssl_enforcement_enabled      = false
-
-  tags = {
-        Name = "acqa-test-pgsqlserver1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
-
-resource "azurerm_postgresql_database" "acqa-test-pgsqldb1" {
-  name                = "acqa-test-pgsqldb1"
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-  server_name         = azurerm_postgresql_server.acqa-test-pgsqlserver1.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
 }

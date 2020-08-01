@@ -171,7 +171,7 @@ resource "azurerm_linux_virtual_machine" "acqa-test-vm1" {
 
     computer_name  = "acqa-test-vm1"
     admin_username = "acqa-test-user1"
-    disable_password_authentication = true
+    disable_password_authentication = false
 
     boot_diagnostics {
         storage_account_uri = azurerm_storage_account.acqa-test-storageaccount1.primary_blob_endpoint

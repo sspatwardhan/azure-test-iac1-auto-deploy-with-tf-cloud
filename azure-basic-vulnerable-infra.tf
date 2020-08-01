@@ -177,9 +177,9 @@ resource "azurerm_linux_virtual_machine" "acqa-test-vm1" {
         storage_account_uri = azurerm_storage_account.acqa-test-storageaccount1.primary_blob_endpoint
     }
 
-    admin_ssh_key {
-    username   = "acqa-test-user1"
-    public_key = file("~/.ssh/id_rsa.pub")
+    #admin_ssh_key {
+    #username   = "acqa-test-user1"
+    #public_key = file("~/.ssh/id_rsa.pub")
   }
 
     tags = {

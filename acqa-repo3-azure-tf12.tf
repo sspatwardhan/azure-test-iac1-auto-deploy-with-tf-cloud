@@ -45,7 +45,7 @@ resource "azurerm_virtual_network" "acqa-test-vnet1" {
         Name = "acqa-test-vnet1"
         ACQAResource = "true"
         Owner = "ACQA"
-        movie = "terminator"
+        movie = "new-terminator"
     }
 }
 

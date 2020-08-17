@@ -47,6 +47,7 @@ resource "azurerm_virtual_network" "acqa-test-vnet1" {
         Owner = "ACQA"
         movie = "new-terminator"
         reason = "testing"
+        new_reason = "re-testing"
     }
 }
 

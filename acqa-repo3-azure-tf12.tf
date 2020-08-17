@@ -49,6 +49,7 @@ resource "azurerm_virtual_network" "acqa-test-vnet1" {
         reason = "testing"
         new_reason = "re-testing"
         email = "spat@accurics.com"
+        dept = "R&D"
     }
 }
 

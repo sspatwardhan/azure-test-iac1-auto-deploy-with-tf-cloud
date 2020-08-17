@@ -51,6 +51,7 @@ resource "azurerm_virtual_network" "acqa-test-vnet1" {
         email = "spat@accurics.com"
         dept = "R&D"
         CostCenter = "Accurics"
+        environment = "dev-int"
     }
 }
 

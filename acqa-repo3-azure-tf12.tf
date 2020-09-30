@@ -3,10 +3,14 @@ provider "azurerm" {
     # The "feature" block is required for AzureRM provider 2.x. 
     # If you're using version 1.x, the "features" block is not allowed.
     # version = "=2.3"
-    client_id = "68f5ef66-456d-45c3-aa3c-54c542e15269"
-    client_secret = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
-    subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
-    tenant_id = "1b25d708-64d9-43ca-a6d4-7210952163ef"
+    # client_id = "68f5ef66-456d-45c3-aa3c-54c542e15269"
+    # client_secret = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
+    # subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
+    # tenant_id = "1b25d708-64d9-43ca-a6d4-7210952163ef"
+    client_id = "36334202-9263-4f4e-a489-3d00d2a5ac0a"
+    client_secret = "9iNPk.4U35JEQ7P_Hwy--9_vSu4bS3W00y"
+    subscription_id = "954d2aa9-c87d-480b-be87-5f09e5cbedfc"
+    tenant_id = "fdc2b371-9276-4c4a-87ad-fd1cb11fdf47"
     features {}
 }
 
@@ -33,6 +37,7 @@ resource "azurerm_resource_group" "acqa-test-rg1" {
         Owner = "ACQA"
     }
 }
+
 
 # Create virtual network in rg1
 resource "azurerm_virtual_network" "acqa-test-vnet1" {
@@ -190,4 +195,39 @@ resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
         ACQAResource = "true"
         Owner = "ACQA"
      }
+}
+
+resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbaccount1" {
+  name = "acqa-test-cosmosdbaccount1"
+  location = azurerm_resource_group.acqa-test-rg1.location
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  offer_type = "Standard"
+  kind = "GlobalDocumentDB"
+  enable_automatic_failover = true
+  consistency_policy {
+    consistency_level = "Session"
+  }
+  
+  geo_location {
+    location = azurerm_resource_group.acqa-test-rg1.location
+    failover_priority = 0
+  }
+
+  tags = {
+        Name = "acqa-test-cosmosdbaccount1"
+        ACQAResource = "true"
+        Owner = "ACQA"
+    }
+}
+resource "azurerm_cosmosdb_sql_database" "acqa-test-cosmossqldb1" {
+  name = "acqa-test-cosmossqldb1"
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
+}
+resource "azurerm_cosmosdb_sql_container" "acqatestsqlcontainer1" {
+  name = "acqatestsqlcontainer1"
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
+  database_name = azurerm_cosmosdb_sql_database.acqa-test-cosmossqldb1.name
+  partition_key_path = "/acqatestsqlcontainer1Id"
 }

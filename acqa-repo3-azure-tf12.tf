@@ -190,7 +190,7 @@ resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
     }
 
     tags = {
-        Name = "acqa-lvm1"
+        Name = "acqa-test-lvm1"
         ACQAResource = "true"
         Owner = "ACQA"
      }

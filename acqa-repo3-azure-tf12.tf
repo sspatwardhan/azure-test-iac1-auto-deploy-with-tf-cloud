@@ -93,6 +93,18 @@ resource "azurerm_public_ip" "acqa-test-publicip2" {
         Owner = "ACQA"
     }
 }
+resource "azurerm_public_ip" "acqa-test-publicip4" {
+    name                         = "acqa-test-publicip4"
+    location                     = "eastus"
+    resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
+    allocation_method            = "Dynamic"
+
+    tags = {
+        Name = "acqa-test-publicip4"
+        ACQAResource = "true"
+        Owner = "ACQA"
+    }
+}
 
 # Create Network Security Group and rule
 resource "azurerm_network_security_group" "acqa-test-nsg1" {
@@ -216,6 +228,26 @@ resource "azurerm_network_interface" "acqa-test-nic2" {
     }
 }
 
+# Create network interface
+resource "azurerm_network_interface" "acqa-test-nic3" {
+    name                      = "acqa-test-nic3"
+    location                  = "eastus"
+    resource_group_name       = azurerm_resource_group.acqa-test-rg1.name
+
+    ip_configuration {
+        name                          = "acqa-test-ipconfig1"
+        subnet_id                     = azurerm_subnet.acqa-test-subnet1.id
+        private_ip_address_allocation = "Dynamic"
+        public_ip_address_id          = azurerm_public_ip.acqa-test-publicip4.id
+    }
+
+    tags = {
+        Name = "acqa-test-nic3"
+        ACQAResource = "true"
+        Owner = "ACQA"
+    }
+}
+
 # Create linux virtual machine
 resource "azurerm_virtual_machine" "acqa-test-vm1" {
   name                  = "acqa-test-vm1"
@@ -256,6 +288,38 @@ resource "azurerm_virtual_machine" "acqa-test-vm1" {
   }
 }
 
+#create windows_virtual_machine
+resource "azurerm_windows_virtual_machine" "acqa-test-wvm1" {
+  name                = "acqa-test-wvm1"
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  location            = azurerm_resource_group.acqa-test-rg1.location
+  size                = "Standard_F2"
+  admin_username      = "adminuser"
+  admin_password      = "P@$$w0rd1234!"
+  network_interface_ids = [
+    azurerm_network_interface.acqa-test-nic3.id,
+  ]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2016-Datacenter"
+    version   = "latest"
+  }
+  tags = {
+    Name = "acqa-test-wvm1"
+    ACQAResource = "true"
+    Owner = "ACQA"
+  }
+}
+
+
+#create cosmosdb
 resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbaccount1" {
   name = "acqa-test-cosmosdbaccount1"
   location = azurerm_resource_group.acqa-test-rg1.location

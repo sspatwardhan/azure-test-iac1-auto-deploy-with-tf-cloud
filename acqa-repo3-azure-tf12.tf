@@ -160,7 +160,7 @@ resource "azurerm_storage_account" "acqa-test-storageaccount1" {
     }
 }
 
-# Create virtual machine
+# Create linux virtual machine
 resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
     name                  = "acqa-test-lvm1"
     location              = "eastus"
@@ -194,6 +194,66 @@ resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
         ACQAResource = "true"
         Owner = "ACQA"
      }
+}
+
+# Create network interface
+resource "azurerm_network_interface" "acqa-test-nic2" {
+    name                      = "acqa-test-nic2"
+    location                  = "eastus"
+    resource_group_name       = azurerm_resource_group.acqa-test-rg1.name
+
+    ip_configuration {
+        name                          = "acqa-test-ipconfig1"
+        subnet_id                     = azurerm_subnet.acqa-test-subnet1.id
+        private_ip_address_allocation = "Dynamic"
+        public_ip_address_id          = azurerm_public_ip.acqa-test-publicip2.id
+    }
+
+    tags = {
+        Name = "acqa-test-nic2"
+        ACQAResource = "true"
+        Owner = "ACQA"
+    }
+}
+
+# Create linux virtual machine
+resource "azurerm_virtual_machine" "acqa-test-vm1" {
+  name                  = "acqa-test-vm1"
+  location              = azurerm_resource_group.acqa-test-rg1.location
+  resource_group_name   = azurerm_resource_group.acqa-test-rg1.name
+  network_interface_ids = [azurerm_network_interface.acqa-test-nic2.id]
+  vm_size               = "Standard_DS1_v2"
+  # Uncomment this line to delete the OS disk automatically when deleting the VM
+  # delete_os_disk_on_termination = true
+
+  # Uncomment this line to delete the data disks automatically when deleting the VM
+  # delete_data_disks_on_termination = true
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "acqa-test-osdisk2"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+  os_profile {
+    computer_name  = "hostname"
+    admin_username = "testadmin"
+    admin_password = "Password1234!"
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+  tags = {
+    Name = "acqa-test-vm1"
+    ACQAResource = "true"
+    Owner = "ACQA"
+  }
 }
 
 resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbaccount1" {

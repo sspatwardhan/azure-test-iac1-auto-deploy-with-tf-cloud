@@ -162,14 +162,13 @@ resource "azurerm_storage_account" "acqa-test-storageaccount1" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
-    name                  = "acqa-lvm1"
+    name                  = "acqa-test-lvm1"
     location              = "eastus"
     resource_group_name   = azurerm_resource_group.acqa-test-rg1.name
     network_interface_ids = [azurerm_network_interface.acqa-test-nic1.id]
     size                  = "Standard_DS1_v2"
     admin_username      = "adminuser"
     admin_password      = "P@$$w0rd1234!"
-
     os_disk {
         name              = "acqa-test-osdisk1"
         caching           = "ReadWrite"
@@ -183,7 +182,7 @@ resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
         version   = "latest"
     }
 
-    computer_name  = "acqa-lvm1"
+    computer_name  = "acqa-test-lvm1"
     disable_password_authentication = false
 
     boot_diagnostics {

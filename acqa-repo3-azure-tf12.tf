@@ -290,3 +290,13 @@ resource "azurerm_cosmosdb_sql_container" "acqatestsqlcontainer1" {
   database_name = azurerm_cosmosdb_sql_database.acqa-test-cosmossqldb1.name
   partition_key_path = "/acqatestsqlcontainer1Id"
 }
+
+# Container Registry
+resource "azurerm_container_registry" "acqatestcontainerregistry1" {
+  name                     = "acqatestcontainerregistry1"
+  resource_group_name      = azurerm_resource_group.acqa-test-rg1.name
+  location                 = azurerm_resource_group.acqa-test-rg1.location
+  sku                      = "Premium"
+  admin_enabled            = false
+  georeplication_locations = ["West Europe"]
+}

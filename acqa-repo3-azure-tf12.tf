@@ -301,6 +301,7 @@ resource "azurerm_windows_virtual_machine" "acqa-test-wvm1" {
   ]
 
   os_disk {
+    name              = "acqa-test-osdisk3"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }

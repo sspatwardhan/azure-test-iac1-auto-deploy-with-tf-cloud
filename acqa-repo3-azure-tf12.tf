@@ -294,7 +294,7 @@ resource "azurerm_windows_virtual_machine" "acqa-test-wvm1" {
   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
   location            = azurerm_resource_group.acqa-test-rg1.location
   size                = "Standard_F2"
-  admin_username      = "adminuser"
+  admin_username      = "mr.drift"
   admin_password      = "P@$$w0rd1234!"
   network_interface_ids = [
     azurerm_network_interface.acqa-test-nic3.id,

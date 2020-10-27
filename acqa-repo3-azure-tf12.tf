@@ -50,13 +50,7 @@ resource "azurerm_virtual_network" "acqa-test-vnet1" {
         Name = "acqa-test-vnet1"
         ACQAResource = "true"
         Owner = "ACQA"
-        movie = "new-terminator"
-        reason = "testing"
-        new_reason = "re-testing"
-        email = "spat@accurics.com"
-        dept = "R&D"
-        CostCenter = "Accurics"
-        environment = "dev-int"
+        Workspace = terraform.workspace
     }
 }
 

@@ -27,7 +27,7 @@ terraform {
 
 # Create a resource groups
 # rg1
-resource "azurerm_resource_group" "iac-id-acqa-test-rg1" {
+resource "azurerm_resource_group" "acqa-test-rg1" {
     name     = "acqa-test-rg1"
     location = "eastus"
 
@@ -40,7 +40,7 @@ resource "azurerm_resource_group" "iac-id-acqa-test-rg1" {
 
 
 # Create virtual network in rg1
-resource "azurerm_virtual_network" "acqa-test-vnet1" {
+resource "azurerm_virtual_network" "iac-acqa-test-vnet1" {
     name                = "acqa-test-vnet1"
     address_space       = ["10.0.0.0/16"]
     location            = "eastus"
@@ -58,7 +58,7 @@ resource "azurerm_virtual_network" "acqa-test-vnet1" {
 resource "azurerm_subnet" "acqa-test-subnet1" {
     name                 = "acqa-test-subnet1"
     resource_group_name  = azurerm_resource_group.acqa-test-rg1.name
-    virtual_network_name = azurerm_virtual_network.acqa-test-vnet1.name
+    virtual_network_name = azurerm_virtual_network.iac-acqa-test-vnet1.name
     address_prefixes       = ["10.0.1.0/24"]
 }
 

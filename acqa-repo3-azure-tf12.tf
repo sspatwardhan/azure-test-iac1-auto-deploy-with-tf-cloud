@@ -27,7 +27,7 @@ terraform {
 
 # Create a resource groups
 # rg1
-resource "azurerm_resource_group" "acqa-test-rg1" {
+resource "azurerm_resource_group" "iac-id-acqa-test-rg1" {
     name     = "acqa-test-rg1"
     location = "eastus"
 

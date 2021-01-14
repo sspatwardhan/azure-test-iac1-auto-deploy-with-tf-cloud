@@ -7,10 +7,15 @@ provider "azurerm" {
   # client_secret = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
   # subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
   # tenant_id = "1b25d708-64d9-43ca-a6d4-7210952163ef"
-  client_id       = "68f5ef66-456d-45c3-aa3c-54c542e15269"
-  client_secret   = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
-  subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
-  tenant_id       = "1b25d708-64d9-43ca-a6d4-7210952163ef"
+#  client_id       = "68f5ef66-456d-45c3-aa3c-54c542e15269"
+#  client_secret   = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
+#  subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
+#  tenant_id       = "1b25d708-64d9-43ca-a6d4-7210952163ef"
+  client_id       = "0382e62d-0ef4-4647-99a4-e61b4c94d022"
+  client_secret   = "0W0UNq~5BZd99NxLf4-D3K.w6nMZm5P.CO"
+  subscription_id = "c6ad982d-08a6-43b1-b32a-0fd82da52d31"
+  tenant_id       = "93e9cfac-b18c-4c8f-9c97-7b88b3c002f2"
+
   features {}
 }
 

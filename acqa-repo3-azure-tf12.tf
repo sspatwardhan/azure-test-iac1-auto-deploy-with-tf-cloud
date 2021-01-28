@@ -155,20 +155,20 @@ resource "azurerm_network_interface_security_group_association" "acqa-test-nisga
     network_security_group_id = azurerm_network_security_group.acqa-test-nsg1.id
 }
 
-# Create storage account for boot diagnostics
-resource "azurerm_storage_account" "acqa-test-storageaccount1" {
-    name                        = "acqateststorageaccount1"
-    resource_group_name         = azurerm_resource_group.acqa-test-rg1.name
-    location                    = "eastus"
-    account_tier                = "Standard"
-    account_replication_type    = "LRS"
+# # Create storage account for boot diagnostics
+# resource "azurerm_storage_account" "acqa-test-storageaccount1" {
+#     name                        = "acqateststorageaccount1"
+#     resource_group_name         = azurerm_resource_group.acqa-test-rg1.name
+#     location                    = "eastus"
+#     account_tier                = "Standard"
+#     account_replication_type    = "LRS"
 
-    tags = {
-        Name = "acqa-test-storageaccount1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
+#     tags = {
+#         Name = "acqa-test-storageaccount1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
 
 # Create linux virtual machine
 resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
@@ -195,9 +195,9 @@ resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
     computer_name  = "acqa-test-lvm1"
     disable_password_authentication = false
 
-    boot_diagnostics {
-        storage_account_uri = azurerm_storage_account.acqa-test-storageaccount1.primary_blob_endpoint
-    }
+#     boot_diagnostics {
+#         storage_account_uri = azurerm_storage_account.acqa-test-storageaccount1.primary_blob_endpoint
+#     }
 
     tags = {
         Name = "acqa-test-lvm1"
@@ -318,41 +318,41 @@ resource "azurerm_windows_virtual_machine" "acqa-test-wvm1" {
 }
 
 
-#create cosmosdb
-resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbaccount1" {
-  name = "acqa-test-cosmosdbaccount1"
-  location = azurerm_resource_group.acqa-test-rg1.location
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-  offer_type = "Standard"
-  kind = "GlobalDocumentDB"
-  enable_automatic_failover = true
-  consistency_policy {
-    consistency_level = "Session"
-  }
+# #create cosmosdb
+# resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbaccount1" {
+#   name = "acqa-test-cosmosdbaccount1"
+#   location = azurerm_resource_group.acqa-test-rg1.location
+#   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+#   offer_type = "Standard"
+#   kind = "GlobalDocumentDB"
+#   enable_automatic_failover = true
+#   consistency_policy {
+#     consistency_level = "Session"
+#   }
   
-  geo_location {
-    location = azurerm_resource_group.acqa-test-rg1.location
-    failover_priority = 0
-  }
+#   geo_location {
+#     location = azurerm_resource_group.acqa-test-rg1.location
+#     failover_priority = 0
+#   }
 
-  tags = {
-        Name = "acqa-test-cosmosdbaccount1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
-resource "azurerm_cosmosdb_sql_database" "acqa-test-cosmossqldb1" {
-  name = "acqa-test-cosmossqldb1"
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-  account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
-}
-resource "azurerm_cosmosdb_sql_container" "acqatestsqlcontainer1" {
-  name = "acqatestsqlcontainer1"
-  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-  account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
-  database_name = azurerm_cosmosdb_sql_database.acqa-test-cosmossqldb1.name
-  partition_key_path = "/acqatestsqlcontainer1Id"
-}
+#   tags = {
+#         Name = "acqa-test-cosmosdbaccount1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
+# resource "azurerm_cosmosdb_sql_database" "acqa-test-cosmossqldb1" {
+#   name = "acqa-test-cosmossqldb1"
+#   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+#   account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
+# }
+# resource "azurerm_cosmosdb_sql_container" "acqatestsqlcontainer1" {
+#   name = "acqatestsqlcontainer1"
+#   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+#   account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
+#   database_name = azurerm_cosmosdb_sql_database.acqa-test-cosmossqldb1.name
+#   partition_key_path = "/acqatestsqlcontainer1Id"
+# }
 
 # Container Registry
 resource "azurerm_container_registry" "acqatestcontainerregistry1" {

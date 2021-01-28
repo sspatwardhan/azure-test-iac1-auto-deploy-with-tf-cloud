@@ -3,18 +3,18 @@ provider "azurerm" {
     # The "feature" block is required for AzureRM provider 2.x. 
     # If you're using version 1.x, the "features" block is not allowed.
     # version = "=2.3"
-    # client_id = "68f5ef66-456d-45c3-aa3c-54c542e15269"
-    # client_secret = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
-    # subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
-    # tenant_id = "1b25d708-64d9-43ca-a6d4-7210952163ef"
+    client_id = "68f5ef66-456d-45c3-aa3c-54c542e15269"
+    client_secret = "qk5-B..Jp0J3YVNv44NZ~ocC~f6FK-EH6Y"
+    subscription_id = "734613be-a4f0-4fe5-9131-17614a0c896b"
+    tenant_id = "1b25d708-64d9-43ca-a6d4-7210952163ef"
     # client_id = "36334202-9263-4f4e-a489-3d00d2a5ac0a"
     # client_secret = "9iNPk.4U35JEQ7P_Hwy--9_vSu4bS3W00y"
     # subscription_id = "954d2aa9-c87d-480b-be87-5f09e5cbedfc"
     # tenant_id = "fdc2b371-9276-4c4a-87ad-fd1cb11fdf47"
-  client_id       = "0382e62d-0ef4-4647-99a4-e61b4c94d022"
-  client_secret   = "0W0UNq~5BZd99NxLf4-D3K.w6nMZm5P.CO"
-  subscription_id = "c6ad982d-08a6-43b1-b32a-0fd82da52d31"
-  tenant_id       = "93e9cfac-b18c-4c8f-9c97-7b88b3c002f2"
+    # client_id       = "0382e62d-0ef4-4647-99a4-e61b4c94d022"
+    # client_secret   = "0W0UNq~5BZd99NxLf4-D3K.w6nMZm5P.CO"
+    # subscription_id = "c6ad982d-08a6-43b1-b32a-0fd82da52d31"
+    # tenant_id       = "93e9cfac-b18c-4c8f-9c97-7b88b3c002f2"
     features {}
 }
 

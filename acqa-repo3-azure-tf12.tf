@@ -155,20 +155,20 @@ resource "azurerm_network_interface_security_group_association" "acqa-test-nisga
     network_security_group_id = azurerm_network_security_group.acqa-test-nsg1.id
 }
 
-# # Create storage account for boot diagnostics
-# resource "azurerm_storage_account" "acqa-test-storageaccount1" {
-#     name                        = "acqateststorageaccount1"
-#     resource_group_name         = azurerm_resource_group.acqa-test-rg1.name
-#     location                    = "eastus"
-#     account_tier                = "Standard"
-#     account_replication_type    = "LRS"
+# Create storage account for boot diagnostics
+resource "azurerm_storage_account" "acqateststrgaccount1" {
+    name                        = "acqateststrgaccount1"
+    resource_group_name         = azurerm_resource_group.acqa-test-rg1.name
+    location                    = "eastus"
+    account_tier                = "Standard"
+    account_replication_type    = "LRS"
 
-#     tags = {
-#         Name = "acqa-test-storageaccount1"
-#         ACQAResource = "true"
-#         Owner = "ACQA"
-#     }
-# }
+    tags = {
+        Name = "acqateststrgaccount1"
+        ACQAResource = "true"
+        Owner = "ACQA"
+    }
+}
 
 # Create linux virtual machine
 resource "azurerm_linux_virtual_machine" "acqa-test-lvm1" {
@@ -318,45 +318,45 @@ resource "azurerm_windows_virtual_machine" "acqa-test-wvm1" {
 }
 
 
-# #create cosmosdb
-# resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbaccount1" {
-#   name = "acqa-test-cosmosdbaccount1"
-#   location = azurerm_resource_group.acqa-test-rg1.location
-#   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-#   offer_type = "Standard"
-#   kind = "GlobalDocumentDB"
-#   enable_automatic_failover = true
-#   consistency_policy {
-#     consistency_level = "Session"
-#   }
+#create cosmosdb
+resource "azurerm_cosmosdb_account" "acqa-test-cosmosdbac1" {
+  name = "acqa-test-cosmosdbac1"
+  location = azurerm_resource_group.acqa-test-rg1.location
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  offer_type = "Standard"
+  kind = "GlobalDocumentDB"
+  enable_automatic_failover = true
+  consistency_policy {
+    consistency_level = "Session"
+  }
   
-#   geo_location {
-#     location = azurerm_resource_group.acqa-test-rg1.location
-#     failover_priority = 0
-#   }
+  geo_location {
+    location = azurerm_resource_group.acqa-test-rg1.location
+    failover_priority = 0
+  }
 
-#   tags = {
-#         Name = "acqa-test-cosmosdbaccount1"
-#         ACQAResource = "true"
-#         Owner = "ACQA"
-#     }
-# }
-# resource "azurerm_cosmosdb_sql_database" "acqa-test-cosmossqldb1" {
-#   name = "acqa-test-cosmossqldb1"
-#   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-#   account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
-# }
-# resource "azurerm_cosmosdb_sql_container" "acqatestsqlcontainer1" {
-#   name = "acqatestsqlcontainer1"
-#   resource_group_name = azurerm_resource_group.acqa-test-rg1.name
-#   account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbaccount1.name
-#   database_name = azurerm_cosmosdb_sql_database.acqa-test-cosmossqldb1.name
-#   partition_key_path = "/acqatestsqlcontainer1Id"
-# }
+  tags = {
+        Name = "acqa-test-cosmosdbac1"
+        ACQAResource = "true"
+        Owner = "ACQA"
+    }
+}
+resource "azurerm_cosmosdb_sql_database" "acqa-test-cosmossqldb1" {
+  name = "acqa-test-cosmossqldb1"
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbac1.name
+}
+resource "azurerm_cosmosdb_sql_container" "acqatestsqlcontainer1" {
+  name = "acqatestsqlcontainer1"
+  resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+  account_name = azurerm_cosmosdb_account.acqa-test-cosmosdbac1.name
+  database_name = azurerm_cosmosdb_sql_database.acqa-test-cosmossqldb1.name
+  partition_key_path = "/acqatestsqlcontainer1Id"
+}
 
 # Container Registry
-resource "azurerm_container_registry" "acqatestcontainerregistry1" {
-  name                     = "acqatestcontainerregistry1"
+resource "azurerm_container_registry" "acqatestcr1" {
+  name                     = "acqatestcr1"
   resource_group_name      = azurerm_resource_group.acqa-test-rg1.name
   location                 = azurerm_resource_group.acqa-test-rg1.location
   sku                      = "Premium"

@@ -21,6 +21,8 @@ steps:
     export ARM_TENANT_ID=~q_Fayqnogi_1I51rf4b7r4MUka_0v3JsJ
     export ARM_CLIENT_ID=1b25d708-64d9-43ca-a6d4-7210952163ef
     export ARM_CLIENT_SECRET=734613be-a4f0-4fe5-9131-17614a0c896b
+    echo "Running accurics init..."
     accurics init
+    echo "Running accurics plan..."
     accurics plan
   displayName: 'Run a multi-line script'

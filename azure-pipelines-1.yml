@@ -14,6 +14,7 @@ steps:
   displayName: 'Accurics Plan'
 
 - script: |
+    brew update
     brew install terraform
     brew install accurics
     export ARM_SUBSCRIPTION_ID= 82625fe6-8f75-4d80-b0c3-41badfcdee65

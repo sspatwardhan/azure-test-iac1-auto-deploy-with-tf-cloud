@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- accurics_x0wux7yd
+
+pool:
+  vmImage: macOS-latest
+
+steps:
+- script: Running ADO Pipeline to accurics plan!
+  displayName: 'Accurics Plan'
+
+- script: |
+    brew install terraform
+    brew install accurics
+    export ARM_SUBSCRIPTION_ID= 82625fe6-8f75-4d80-b0c3-41badfcdee65
+    export ARM_TENANT_ID= ~q_Fayqnogi_1I51rf4b7r4MUka_0v3JsJ
+    export ARM_CLIENT_ID= 1b25d708-64d9-43ca-a6d4-7210952163ef
+    export ARM_CLIENT_SECRET= 734613be-a4f0-4fe5-9131-17614a0c896b
+    ./accurics init
+    ./accurics plan
+  displayName: 'Run a multi-line script'

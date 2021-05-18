@@ -11,6 +11,7 @@ pool:
 
 steps:
 - script: |
+    terraform version
     echo Downloading accurics cli
     wget https://downloads.accurics.com/cli/latest/accurics_linux -O accurics 
     chmod +x accurics

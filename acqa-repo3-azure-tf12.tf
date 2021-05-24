@@ -44,152 +44,152 @@ resource "azurerm_resource_group" "acqa-test-rg1" {
 
 
 # Create virtual network in rg1
-resource "azurerm_virtual_network" "acqa-test-vnet1" {
-    name                = "acqa-test-vnet1"
-    address_space       = ["10.0.0.0/16"]
-    location            = "eastus"
-    resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+# resource "azurerm_virtual_network" "acqa-test-vnet1" {
+#     name                = "acqa-test-vnet1"
+#     address_space       = ["10.0.0.0/16"]
+#     location            = "eastus"
+#     resource_group_name = azurerm_resource_group.acqa-test-rg1.name
 
-    tags = {
-        Name = "acqa-test-vnet1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-        Workspace = terraform.workspace
-    }
-}
+#     tags = {
+#         Name = "acqa-test-vnet1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#         Workspace = terraform.workspace
+#     }
+# }
 
-# Create subnet - doing this separately as it is attached to NIC below
-resource "azurerm_subnet" "acqa-test-subnet1" {
-    name                 = "acqa-test-subnet1"
-    resource_group_name  = azurerm_resource_group.acqa-test-rg1.name
-    virtual_network_name = azurerm_virtual_network.acqa-test-vnet1.name
-    address_prefixes       = ["10.0.1.0/24"]
-}
+# # Create subnet - doing this separately as it is attached to NIC below
+# resource "azurerm_subnet" "acqa-test-subnet1" {
+#     name                 = "acqa-test-subnet1"
+#     resource_group_name  = azurerm_resource_group.acqa-test-rg1.name
+#     virtual_network_name = azurerm_virtual_network.acqa-test-vnet1.name
+#     address_prefixes       = ["10.0.1.0/24"]
+# }
 
-# Create public IPs
-resource "azurerm_public_ip" "acqa-test-publicip1" {
-    name                         = "acqa-test-publicip1"
-    location                     = "eastus"
-    resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
-    allocation_method            = "Dynamic"
+# # Create public IPs
+# resource "azurerm_public_ip" "acqa-test-publicip1" {
+#     name                         = "acqa-test-publicip1"
+#     location                     = "eastus"
+#     resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
+#     allocation_method            = "Dynamic"
 
-    tags = {
-        Name = "acqa-test-publicip1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
-resource "azurerm_public_ip" "acqa-test-publicip2" {
-    name                         = "acqa-test-publicip2"
-    location                     = "eastus"
-    resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
-    allocation_method            = "Dynamic"
+#     tags = {
+#         Name = "acqa-test-publicip1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
+# resource "azurerm_public_ip" "acqa-test-publicip2" {
+#     name                         = "acqa-test-publicip2"
+#     location                     = "eastus"
+#     resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
+#     allocation_method            = "Dynamic"
 
-    tags = {
-        Name = "acqa-test-publicip2"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
-resource "azurerm_public_ip" "acqa-test-publicip4" {
-    name                         = "acqa-test-publicip4"
-    location                     = "eastus"
-    resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
-    allocation_method            = "Dynamic"
+#     tags = {
+#         Name = "acqa-test-publicip2"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
+# resource "azurerm_public_ip" "acqa-test-publicip4" {
+#     name                         = "acqa-test-publicip4"
+#     location                     = "eastus"
+#     resource_group_name          = azurerm_resource_group.acqa-test-rg1.name
+#     allocation_method            = "Dynamic"
 
-    tags = {
-        Name = "acqa-test-publicip4"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
+#     tags = {
+#         Name = "acqa-test-publicip4"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
 
-# Create Network Security Group and rule
-resource "azurerm_network_security_group" "acqa-test-nsg1" {
-    name                = "acqa-test-nsg1"
-    location            = "eastus"
-    resource_group_name = azurerm_resource_group.acqa-test-rg1.name
+# # Create Network Security Group and rule
+# resource "azurerm_network_security_group" "acqa-test-nsg1" {
+#     name                = "acqa-test-nsg1"
+#     location            = "eastus"
+#     resource_group_name = azurerm_resource_group.acqa-test-rg1.name
     
-    security_rule {
-        name                       = "SSH"
-        priority                   = 1001
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "tcp"
-        source_port_range          = "*"
-        destination_port_range     = "*"
-        source_address_prefix      = "*"
-        destination_address_prefix = "*"
-    }
+#     security_rule {
+#         name                       = "SSH"
+#         priority                   = 1001
+#         direction                  = "Inbound"
+#         access                     = "Allow"
+#         protocol                   = "tcp"
+#         source_port_range          = "*"
+#         destination_port_range     = "*"
+#         source_address_prefix      = "*"
+#         destination_address_prefix = "*"
+#     }
 
-    tags = {
-        Name = "acqa-test-nsg1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
+#     tags = {
+#         Name = "acqa-test-nsg1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
 
-# Create network interface
-resource "azurerm_network_interface" "acqa-test-nic1" {
-    name                      = "acqa-test-nic1"
-    location                  = "eastus"
-    resource_group_name       = azurerm_resource_group.acqa-test-rg1.name
+# # Create network interface
+# resource "azurerm_network_interface" "acqa-test-nic1" {
+#     name                      = "acqa-test-nic1"
+#     location                  = "eastus"
+#     resource_group_name       = azurerm_resource_group.acqa-test-rg1.name
 
-    ip_configuration {
-        name                          = "acqa-test-ipconfig1"
-        subnet_id                     = azurerm_subnet.acqa-test-subnet1.id
-        private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = azurerm_public_ip.acqa-test-publicip1.id
-    }
+#     ip_configuration {
+#         name                          = "acqa-test-ipconfig1"
+#         subnet_id                     = azurerm_subnet.acqa-test-subnet1.id
+#         private_ip_address_allocation = "Dynamic"
+#         public_ip_address_id          = azurerm_public_ip.acqa-test-publicip1.id
+#     }
 
-    tags = {
-        Name = "acqa-test-nic1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
+#     tags = {
+#         Name = "acqa-test-nic1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
 
-# Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "acqa-test-nisga1" {
-    network_interface_id      = azurerm_network_interface.acqa-test-nic1.id
-    network_security_group_id = azurerm_network_security_group.acqa-test-nsg1.id
-}
+# # Connect the security group to the network interface
+# resource "azurerm_network_interface_security_group_association" "acqa-test-nisga1" {
+#     network_interface_id      = azurerm_network_interface.acqa-test-nic1.id
+#     network_security_group_id = azurerm_network_security_group.acqa-test-nsg1.id
+# }
 
-# Create storage account for boot diagnostics
-resource "azurerm_storage_account" "acqateststrgaccount1" {
-    name                        = "acqateststrgaccount1"
-    resource_group_name         = azurerm_resource_group.acqa-test-rg1.name
-    location                    = "eastus"
-    account_tier                = "Standard"
-    account_replication_type    = "LRS"
+# # Create storage account for boot diagnostics
+# resource "azurerm_storage_account" "acqateststrgaccount1" {
+#     name                        = "acqateststrgaccount1"
+#     resource_group_name         = azurerm_resource_group.acqa-test-rg1.name
+#     location                    = "eastus"
+#     account_tier                = "Standard"
+#     account_replication_type    = "LRS"
 
-    tags = {
-        Name = "acqateststrgaccount1"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
+#     tags = {
+#         Name = "acqateststrgaccount1"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
 
 
-# Create network interface
-resource "azurerm_network_interface" "acqa-test-nic2" {
-    name                      = "acqa-test-nic2"
-    location                  = "eastus"
-    resource_group_name       = azurerm_resource_group.acqa-test-rg1.name
+# # Create network interface
+# resource "azurerm_network_interface" "acqa-test-nic2" {
+#     name                      = "acqa-test-nic2"
+#     location                  = "eastus"
+#     resource_group_name       = azurerm_resource_group.acqa-test-rg1.name
 
-    ip_configuration {
-        name                          = "acqa-test-ipconfig1"
-        subnet_id                     = azurerm_subnet.acqa-test-subnet1.id
-        private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = azurerm_public_ip.acqa-test-publicip2.id
-    }
+#     ip_configuration {
+#         name                          = "acqa-test-ipconfig1"
+#         subnet_id                     = azurerm_subnet.acqa-test-subnet1.id
+#         private_ip_address_allocation = "Dynamic"
+#         public_ip_address_id          = azurerm_public_ip.acqa-test-publicip2.id
+#     }
 
-    tags = {
-        Name = "acqa-test-nic2"
-        ACQAResource = "true"
-        Owner = "ACQA"
-    }
-}
+#     tags = {
+#         Name = "acqa-test-nic2"
+#         ACQAResource = "true"
+#         Owner = "ACQA"
+#     }
+# }
 
 
 data "azurerm_client_config" "current" {}
@@ -200,7 +200,7 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
   resource_group_name        = azurerm_resource_group.acqa-test-rg1.name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "premium"
-  soft_delete_retention_days = 0
+  soft_delete_retention_days = 7
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id

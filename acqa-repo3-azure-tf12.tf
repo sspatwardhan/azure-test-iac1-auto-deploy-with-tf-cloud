@@ -221,7 +221,7 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
 
 resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
   name         = "acqa-test-kvault1-key1-certificate"
-  key_vault_id = azurerm_key_vault.acqa-test-kvault1-key1.id
+  key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
   key_type     = "RSA"
   key_size     = 2048
 

@@ -190,3 +190,47 @@ resource "azurerm_network_interface" "acqa-test-nic2" {
         Owner = "ACQA"
     }
 }
+
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_key_vault" "acqa-test-kvault1" {
+  name                       = "acqa-test-kvault1"
+  location                   = azurerm_resource_group.acqa-test-rg1.location
+  resource_group_name        = azurerm_resource_group.acqa-test-rg1.name
+  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  sku_name                   = "premium"
+  soft_delete_retention_days = 7
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "create",
+      "get",
+      "purge",
+      "recover"
+    ]
+
+    secret_permissions = [
+      "set",
+    ]
+  }
+}
+
+resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
+  name         = "acqa-test-kvault1-key1-certificate"
+  key_vault_id = azurerm_key_vault.acqa-test-kvault1-key1.id
+  key_type     = "RSA"
+  key_size     = 2048
+
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "verify",
+    "wrapKey",
+  ]
+}

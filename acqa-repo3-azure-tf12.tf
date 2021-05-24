@@ -200,22 +200,110 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
   resource_group_name        = azurerm_resource_group.acqa-test-rg1.name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "premium"
-  soft_delete_retention_days = 7
+  soft_delete_retention_days = 0
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = [
+    certificate_permissions = [
       "create",
+      "delete",
+      "deleteissuers",
       "get",
+      "getissuers",
+      "import",
+      "list",
+      "listissuers",
+      "managecontacts",
+      "manageissuers",
+      "setissuers",
+      "update",
+    ]
+
+    key_permissions = [
+      "backup",
+      "create",
+      "decrypt",
+      "delete",
+      "encrypt",
+      "get",
+      "import",
+      "list",
       "purge",
-      "recover"
+      "recover",
+      "restore",
+      "sign",
+      "unwrapKey",
+      "update",
+      "verify",
+      "wrapKey",
     ]
 
     secret_permissions = [
+      "backup",
+      "delete",
+      "get",
+      "list",
+      "purge",
+      "recover",
+      "restore",
       "set",
     ]
+  }
+}
+
+resource "azurerm_key_vault_certificate" "acqa-test-kvault1-cert1" {
+  name         = "acqa-test-kvault1-cert1"
+  key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
+
+  certificate_policy {
+    issuer_parameters {
+      name = "Self"
+    }
+
+    key_properties {
+      exportable = true
+      key_size   = 2048
+      key_type   = "RSA"
+      reuse_key  = true
+    }
+
+    lifetime_action {
+      action {
+        action_type = "AutoRenew"
+      }
+
+      trigger {
+        days_before_expiry = 30
+      }
+    }
+
+    secret_properties {
+      content_type = "application/x-pkcs12"
+    }
+
+    x509_certificate_properties {
+      # Server Authentication = 1.3.6.1.5.5.7.3.1
+      # Client Authentication = 1.3.6.1.5.5.7.3.2
+      extended_key_usage = ["1.3.6.1.5.5.7.3.1"]
+
+      key_usage = [
+        "cRLSign",
+        "dataEncipherment",
+        "digitalSignature",
+        "keyAgreement",
+        "keyCertSign",
+        "keyEncipherment",
+      ]
+
+      subject_alternative_names {
+        dns_names = ["qa.accurics.com", "automate.and.chill"]
+      }
+
+      subject            = "CN=hello-world"
+      validity_in_months = 12
+    }
   }
 }
 
@@ -233,4 +321,10 @@ resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
     "verify",
     "wrapKey",
   ]
+}
+
+resource "azurerm_key_vault_secret" "acqa-test-kvault1-secret1" {
+  name         = "acqa-test-kvault1-secret1"
+  value        = "szechuan"
+  key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
 }

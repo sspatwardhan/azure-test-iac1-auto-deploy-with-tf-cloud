@@ -238,6 +238,7 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
       "update",
       "verify",
       "wrapKey",
+      "list"
     ]
 
     secret_permissions = [

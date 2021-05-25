@@ -201,7 +201,7 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "premium"
   soft_delete_retention_days = 7
-#   purge_protection_enabled    = true
+  purge_protection_enabled    = true
 #   network_acls {
 #     default_action = "Deny"
 #     bypass         = "AzureServices"

@@ -194,14 +194,14 @@ resource "azurerm_resource_group" "acqa-test-rg1" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_key_vault" "acqa-test-kvault1" {
-  name                       = "acqa-test-kvault1"
+resource "azurerm_key_vault" "acqa-test-kvault2" {
+  name                       = "acqa-test-kvault2"
   location                   = azurerm_resource_group.acqa-test-rg1.location
   resource_group_name        = azurerm_resource_group.acqa-test-rg1.name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "premium"
-  soft_delete_retention_days = 7
-  purge_protection_enabled    = true
+  soft_delete_enabled		 = false
+  purge_protection_enabled   = false
 #   network_acls {
 #     default_action = "Deny"
 #     bypass         = "AzureServices"
@@ -258,9 +258,9 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
   }
 }
 
-resource "azurerm_key_vault_certificate" "acqa-test-kvault1-cert1" {
-  name         = "acqa-test-kvault1-cert1"
-  key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
+resource "azurerm_key_vault_certificate" "acqa-test-kvault2-cert1" {
+  name         = "acqa-test-kvault2-cert1"
+  key_vault_id = azurerm_key_vault.acqa-test-kvault2.id
 
   certificate_policy {
     issuer_parameters {
@@ -303,7 +303,7 @@ resource "azurerm_key_vault_certificate" "acqa-test-kvault1-cert1" {
       ]
 
       subject_alternative_names {
-        dns_names = ["qa.accurics.com", "automate.and.chill"]
+        dns_names = ["qa1.accurics.com", "automate1.and.chill"]
       }
 
       subject            = "CN=hello-world"
@@ -312,9 +312,9 @@ resource "azurerm_key_vault_certificate" "acqa-test-kvault1-cert1" {
   }
 }
 
-resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
-  name         = "acqa-test-kvault1-key1-certificate"
-  key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
+resource "azurerm_key_vault_key" "acqa-test-kvault2-key1" {
+  name         = "acqa-test-kvault2-key1-certificate"
+  key_vault_id = azurerm_key_vault.acqa-test-kvault2.id
   key_type     = "RSA"
   key_size     = 2048
 #   expiration_date = "2050-01-01T00:00:00Z"
@@ -328,10 +328,10 @@ resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
   ]
 }
 
-resource "azurerm_key_vault_secret" "acqa-test-kvault1-secret1" {
-  name         = "acqa-test-kvault1-secret1"
+resource "azurerm_key_vault_secret" "acqa-test-kvault2-secret1" {
+  name         = "acqa-test-kvault2-secret1"
   value        = "szechuan"
 #   content_type = "application/x-pkcs12"
-  key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
+  key_vault_id = azurerm_key_vault.acqa-test-kvault2.id
 #   expiration_date = "2050-01-01T00:00:00Z"
 }

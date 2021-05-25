@@ -202,10 +202,10 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
   sku_name                   = "premium"
   soft_delete_retention_days = 7
   purge_protection_enabled    = true
-  network_acls {
-    default_action = "Deny"
-    bypass         = "AzureServices"
-  }
+#   network_acls {
+#     default_action = "Deny"
+#     bypass         = "AzureServices"
+#   }
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id
@@ -331,7 +331,7 @@ resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
 resource "azurerm_key_vault_secret" "acqa-test-kvault1-secret1" {
   name         = "acqa-test-kvault1-secret1"
   value        = "szechuan"
-  content_type = "application/x-pkcs12"
+#   content_type = "application/x-pkcs12"
   key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
   expiration_date = "2050-01-01T00:00:00Z"
 }

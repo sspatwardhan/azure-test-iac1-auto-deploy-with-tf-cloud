@@ -303,7 +303,7 @@ resource "azurerm_key_vault_certificate" "acqa-test-kvault2-cert1" {
       ]
 
       subject_alternative_names {
-        dns_names = ["qa1.accurics.com", "automate1.and.chill"]
+        dns_names = ["qa1.accurics1.com", "automate1.and1.chill"]
       }
 
       subject            = "CN=hello-world"

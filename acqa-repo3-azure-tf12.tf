@@ -331,7 +331,7 @@ resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
 resource "azurerm_key_vault_secret" "acqa-test-kvault1-secret1" {
   name         = "acqa-test-kvault1-secret1"
   value        = "szechuan"
-  content_type = "Spat"
+  content_type = "application/x-pkcs12"
   key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
   expiration_date = "2050-01-01T00:00:00Z"
 }

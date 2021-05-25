@@ -201,7 +201,7 @@ resource "azurerm_key_vault" "acqa-test-kvault1" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "premium"
   soft_delete_retention_days = 7
-  purge_protection_enabled    = true
+#   purge_protection_enabled    = true
 #   network_acls {
 #     default_action = "Deny"
 #     bypass         = "AzureServices"
@@ -317,7 +317,7 @@ resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
   key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
   key_type     = "RSA"
   key_size     = 2048
-  expiration_date = "2050-01-01T00:00:00Z"
+#   expiration_date = "2050-01-01T00:00:00Z"
   key_opts = [
     "decrypt",
     "encrypt",
@@ -333,5 +333,5 @@ resource "azurerm_key_vault_secret" "acqa-test-kvault1-secret1" {
   value        = "szechuan"
 #   content_type = "application/x-pkcs12"
   key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
-  expiration_date = "2050-01-01T00:00:00Z"
+#   expiration_date = "2050-01-01T00:00:00Z"
 }

@@ -313,7 +313,7 @@ resource "azurerm_key_vault_key" "acqa-test-kvault1-key1" {
   key_vault_id = azurerm_key_vault.acqa-test-kvault1.id
   key_type     = "RSA"
   key_size     = 2048
-
+  expiration_date = "2050-01-01T00:00:00Z"
   key_opts = [
     "decrypt",
     "encrypt",

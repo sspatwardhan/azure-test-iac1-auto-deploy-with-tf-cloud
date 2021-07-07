@@ -1,18 +1,39 @@
+# trigger:
+# -master
+ 
+# pool:
+# vmImage: ‘macOS-latest’
+ 
+# steps
+# - task: CmdLine@2
+#  inputs:
+#    script: |
+#      brew install terraform
+#      brew install accurics
+#      export ARM_SUBSCRIPTION_ID= 82625fe6-8f75-4d80-b0c3-41badfcdee65
+#      export ARM_TENANT_ID= ~q_Fayqnogi_1I51rf4b7r4MUka_0v3JsJ
+#      export ARM_CLIENT_ID= 1b25d708-64d9-43ca-a6d4-7210952163ef
+#      export ARM_CLIENT_SECRET= 734613be-a4f0-4fe5-9131-17614a0c896b
+#      ./accurics init
+#      ./accurics plan
+
 trigger:
--master
- 
+- Accurics Pipeline Mode - Run 3
+
 pool:
-vmImage: ‘macOS-latest’
- 
-steps
-- task: CmdLine@2
- inputs:
-   script: |
-     brew install terraform
-     brew install accurics
-     export ARM_SUBSCRIPTION_ID= 82625fe6-8f75-4d80-b0c3-41badfcdee65
-     export ARM_TENANT_ID= ~q_Fayqnogi_1I51rf4b7r4MUka_0v3JsJ
-     export ARM_CLIENT_ID= 1b25d708-64d9-43ca-a6d4-7210952163ef
-     export ARM_CLIENT_SECRET= 734613be-a4f0-4fe5-9131-17614a0c896b
-     ./accurics init
-     ./accurics plan
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    echo Downloading accurics cli
+    wget https://downloads.accurics.com/cli/dev/1.0.19.dev/accurics_linux -O accurics 
+    chmod +x accurics
+    export ARM_SUBSCRIPTION_ID= 82625fe6-8f75-4d80-b0c3-41badfcdee65
+    export ARM_TENANT_ID= ~q_Fayqnogi_1I51rf4b7r4MUka_0v3JsJ
+    export ARM_CLIENT_ID= 1b25d708-64d9-43ca-a6d4-7210952163ef
+    export ARM_CLIENT_SECRET= 734613be-a4f0-4fe5-9131-17614a0c896b
+    ./accurics init
+    echo "Running accurics in pipeline mode..."
+    git config --global user.name "saurabh@nbapipelinetest.com"
+    ./accurics plan -mode=pipeline -input=false -appurl=https://stage.accurics.com -token=ddba5465-f485-4bc0-9d0e-5a806ef8e12c
+  displayName: 'Accurics pipeline mode'

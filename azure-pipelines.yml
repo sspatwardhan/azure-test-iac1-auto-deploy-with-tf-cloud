@@ -34,6 +34,6 @@ steps:
     export ARM_CLIENT_SECRET= 734613be-a4f0-4fe5-9131-17614a0c896b
     ./accurics init
     echo "Running accurics in pipeline mode..."
-    git config --global user.name "saurabh@NBA-PipelineMode-Test2Run3.com"
+    git config --global user.name "spat@az-pipeline1.com"
     ./accurics plan -mode=pipeline -input=false -appurl=https://stage.accurics.com -token=ddba5465-f485-4bc0-9d0e-5a806ef8e12c
   displayName: 'Accurics pipeline mode'
